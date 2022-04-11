@@ -1,0 +1,49 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Livreur index{% endblock %}
+
+{% block body %}
+    <div class="container d-flex flex-column align-items-center">
+
+
+    <h1>Livreur index</h1>
+
+    <table class="table table-bordered" border=" fuchsia">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for livreur in livreurs %}
+            <tr>
+                <td>{{ livreur.id }}</td>
+                <td>{{ livreur.nom }}</td>
+                <td>{{ livreur.prenom }}</td>
+                <td>{{ livreur.email }}</td>
+                <td>{{ livreur.username }}</td>
+                <td>{{ livreur.password }}</td>
+                <td>
+
+                    <a href="{{ path('app_livreur_show', {'id': livreur.id}) }}" class="btn btn-fill-out btn-block">Show</a>
+                    <a href="{{ path('app_livreur_show', {'id': livreur.id}) }}" class="btn btn-fill-out btn-block">Edit</a>
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_livreur_new') }}" class="btn btn-fill-out btn-block ">Create new</a>
+    </div>
+{% endblock %}
