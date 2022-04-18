@@ -1,0 +1,45 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Sponsor{% endblock %}
+
+{% block body %}
+<div class="container d-flex flex-column align-items-center">
+    <h1>Sponsor</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom_sponsor</th>
+                <th>Prenom_sponsor</th>
+                <th>Num_sponsor</th>
+                <th>Type_sponsor</th>
+                <th>Event_id</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sponsor in sponsors %}
+            <tr>
+                <td>{{ sponsor.id }}</td>
+                <td>{{ sponsor.nomSponsor }}</td>
+                <td>{{ sponsor.prenomSponsor }}</td>
+                <td>{{ sponsor.numSponsor }}</td>
+                <td>{{ sponsor.typeSponsor }}</td>
+                <td>{{ sponsor.eventId }}</td>
+                <td>
+                    <a href="{{ path('app_sponsor_show', {'id': sponsor.id}) }}" class="btn btn-fill-out btn-block">show</a>
+                    <a href="{{ path('app_sponsor_edit', {'id': sponsor.id}) }}" class="btn btn-fill-out btn-block">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_sponsor_new') }}" class="btn btn-fill-out btn-block">Create new</a>
+</div>
+{% endblock %}

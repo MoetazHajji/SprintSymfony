@@ -1,0 +1,15 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Edit Sponsor{% endblock %}
+
+{% block body %}
+<div class="container d-flex flex-column align-items-center">
+    <h1>Edit Sponsor</h1>
+
+    {{ include('sponsor/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_sponsor_index') }}" class="btn btn-fill-out btn-block">back to list</a>
+
+    {{ include('sponsor/_delete_form.html.twig') }}
+</div>
+{% endblock %}

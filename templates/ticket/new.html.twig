@@ -1,0 +1,13 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}New Ticket{% endblock %}
+
+{% block body %}
+<div class="container d-flex flex-column align-items-center">
+    <h1>Create new Ticket</h1>
+
+    {{ include('ticket/_form.html.twig') }}
+
+    <a href="{{ path('app_ticket_index') }}" class="btn btn-fill-out btn-block">back to list</a>
+</div>
+{% endblock %}

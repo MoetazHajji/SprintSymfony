@@ -1,0 +1,49 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Evenement{% endblock %}
+
+{% block body %}
+<div class="container d-flex flex-column align-items-center">
+    <h1>Evenement</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom_event</th>
+                <th>Nbr_participant</th>
+                <th>Date_debut</th>
+                <th>Date_fin</th>
+                <th>Emplacement</th>
+                <th>Description</th>
+                <th>Theme</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for evenement in evenements %}
+            <tr>
+                <td>{{ evenement.id }}</td>
+                <td>{{ evenement.nomEvent }}</td>
+                <td>{{ evenement.nbrParticipant }}</td>
+                <td>{{ evenement.dateDebut ? evenement.dateDebut|date('Y-m-d') : '' }}</td>
+                <td>{{ evenement.dateFin ? evenement.dateFin|date('Y-m-d') : '' }}</td>
+                <td>{{ evenement.emplacement }}</td>
+                <td>{{ evenement.description }}</td>
+                <td>{{ evenement.theme }}</td>
+                <td>
+                    <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}" class="btn btn-fill-out btn-block ">show</a>
+                    <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}" class="btn btn-fill-out btn-block ">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_evenement_new') }}" class="btn btn-fill-out btn-block ">Create new</a>
+</div>
+{% endblock %}

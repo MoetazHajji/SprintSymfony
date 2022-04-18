@@ -1,0 +1,44 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Sponsor{% endblock %}
+
+{% block body %}
+<div class="container d-flex flex-column align-items-center">
+    <h1>Sponsor</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ sponsor.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom_sponsor</th>
+                <td>{{ sponsor.nomSponsor }}</td>
+            </tr>
+            <tr>
+                <th>Prenom_sponsor</th>
+                <td>{{ sponsor.prenomSponsor }}</td>
+            </tr>
+            <tr>
+                <th>Num_sponsor</th>
+                <td>{{ sponsor.numSponsor }}</td>
+            </tr>
+            <tr>
+                <th>Type_sponsor</th>
+                <td>{{ sponsor.typeSponsor }}</td>
+            </tr>
+            <tr>
+                <th>Event_id</th>
+                <td>{{ sponsor.eventId }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_sponsor_index') }}" class="btn btn-fill-out btn-block">back to list</a>
+
+    <a href="{{ path('app_sponsor_edit', {'id': sponsor.id}) }}" class="btn btn-fill-out btn-block">edit</a>
+
+    {{ include('sponsor/_delete_form.html.twig') }}
+</div>
+{% endblock %}

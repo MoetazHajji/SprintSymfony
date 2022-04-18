@@ -1,0 +1,41 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Ticket index{% endblock %}
+
+{% block body %}
+<div class="container d-flex flex-column align-items-center">
+    <h1>Ticket index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Packet</th>
+                <th>Prix</th>
+                <th>Event_id</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket.id }}</td>
+                <td>{{ ticket.packet }}</td>
+                <td>{{ ticket.prix }}</td>
+                <td>{{ ticket.eventId }}</td>
+                <td>
+                    <a href="{{ path('app_ticket_show', {'id': ticket.id}) }}"class="btn btn-fill-out btn-block">show</a>
+                    <a href="{{ path('app_ticket_edit', {'id': ticket.id}) }}"class="btn btn-fill-out btn-block">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_ticket_new') }}" class="btn btn-fill-out btn-block">Create new</a>
+</div>
+{% endblock %}
