@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\LivreurRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Asserts;
 
 /**
  * @ORM\Entity(repositoryClass=LivreurRepository::class)
@@ -35,15 +36,11 @@ class Livreur
     /**
      *
      * @ORM\Column(type="string", length=255)
-     *@Asserts\NotBlank
-     * @Asserts\length(min= 6 , max= 16)
      */
     private $username;
 
     /**
      * @Asserts\NotBlank
-     * @Asserts\length(min= 6 , max= 16)
-     * @ORM\Column(type="string", length=255)
      */
     private $password;
 

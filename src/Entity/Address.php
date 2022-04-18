@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AddressRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Asserts;
 
 /**
  * @ORM\Entity(repositoryClass=AddressRepository::class)
@@ -19,6 +20,8 @@ class Address
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Asserts\NotBlank
+     * @Asserts\length(min= 6 , max= 16)
      */
     private $fullName;
 
@@ -39,6 +42,8 @@ class Address
 
     /**
      * @ORM\Column(type="string", length=255)
+     *  @Asserts\NotBlank
+     * @Asserts\length(min= 8 , max= 8)
      */
     private $phone;
 
