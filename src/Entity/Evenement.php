@@ -35,9 +35,15 @@ class Evenement
     private $nom_event;
 
     /**
+     *  @Assert\Length(
+     *      min = 3,
+     *      max = 10,
+     *      minMessage = "Your first name must be at least {{ limit }} characters long",
+     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+     * )
      * @ORM\Column(type="integer")
      */
-    private $nbr_participant;     
+    private $nbr_participant;
 
     /**
      * @ORM\Column(type="date")
