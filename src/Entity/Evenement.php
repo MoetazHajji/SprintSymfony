@@ -37,7 +37,7 @@ class Evenement
     /**
      * @ORM\Column(type="integer")
      */
-    private $nbr_participant;
+    private $nbr_participant;     
 
     /**
      * @ORM\Column(type="date")
