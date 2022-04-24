@@ -36,6 +36,7 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Asserts\length(min= 6 , max= 16)
      */
     private $password;
 
@@ -50,11 +51,13 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Asserts\length(min= 6 , max= 16)
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Asserts\length(min= 6 , max= 16)
      */
     private $lastname;
 

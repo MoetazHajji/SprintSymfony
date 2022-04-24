@@ -45,6 +45,7 @@ class RegistrationController extends AbstractController
             );
             $user->setRole("Client");
 
+
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -115,6 +116,7 @@ class RegistrationController extends AbstractController
                 )
             );
             $user->setRole("Admin");
+
 
             $entityManager->persist($user);
             $entityManager->flush();

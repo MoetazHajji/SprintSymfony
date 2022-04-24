@@ -1,11 +1,12 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseBack.html.twig' %}
 
-{% block title %}Address index{% endblock %}
+{% block title %}Address{% endblock %}
 
 {% block body %}
-    <h1>Address index</h1>
+<div class="container d-flex flex-column align-items-center">
+    <h1>Addresses </h1>
 
-    <table class="table">
+    <table class="table" border="" style="align-content: center">
         <thead>
             <tr>
                 <th>Id</th>
@@ -17,7 +18,6 @@
                 <th>City</th>
                 <th>CodePostal</th>
                 <th>Country</th>
-                <th>actions</th>
             </tr>
         </thead>
         <tbody>
@@ -32,10 +32,6 @@
                 <td>{{ address.city }}</td>
                 <td>{{ address.codePostal }}</td>
                 <td>{{ address.country }}</td>
-                <td>
-                    <a href="{{ path('app_address_show', {'id': address.id}) }}">show</a>
-                    <a href="{{ path('app_address_edit', {'id': address.id}) }}">edit</a>
-                </td>
             </tr>
         {% else %}
             <tr>
@@ -45,5 +41,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_address_new') }}">Create new</a>
+    <a href="{{ path('app_address_new') }} " class="btn btn-border-fill btn-block mt-2">Create new</a>
+</div>
 {% endblock %}
