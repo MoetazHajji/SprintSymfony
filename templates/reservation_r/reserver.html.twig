@@ -1,0 +1,43 @@
+<div class="section pb_70">
+    <div class="container">
+        <div class="col-lg-12">
+
+            <img height="400" width="1500" src=" {{asset(image)}}">
+        </div>
+    </div>
+
+
+    <div class="section pt-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="heading_s1">
+
+                    </div>
+
+                    <div class="field_form">
+                        {{ form_start(formm) }}
+
+
+                                    {{form_row(formm.nbrpersonneR,{'attr':{'class':'form-control'}})}}
+
+
+                                    {{form_row(formm.dateR,{'attr':{'class':'form-control'}})}}
+
+
+                                    {{form_row(formm.timeR,{'attr':{'class':'form-control'}})}}
+
+
+
+
+                            </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-fill-out">RESERVER</button>
+                    </div>
+                    {{form_end(formm) }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,207 @@
+<div class="section small_pt pb_70">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="heading_s1 text-center">
+                    <h2>NOS PRODUITS</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="tab-style1">
+                    <ul class="nav nav-tabs justify-content-center" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="arrival-tab" data-toggle="tab" href="#arrival" role="tab" aria-controls="arrival" aria-selected="true"></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="sellers-tab" data-toggle="tab" href="#sellers" role="tab" aria-controls="sellers" aria-selected="false"></a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="arrival" role="tabpanel" aria-labelledby="arrival-tab">
+                        <div class="row shop_container">
+                            {% for l in products %}
+                            <div class="col-lg-3 col-md-4 col-6">
+
+
+
+
+                                <div class="product">
+
+                                    <div class="product_img">
+
+                                        <a href="">
+                                            <img src="{{asset(l.image)}}" alt="product_img1">
+                                        </a>
+                                        <div class="product_action_box">
+                                            <ul class="list_none pr_action_btn">
+                                                <li class="add-to-cart"><a href="#">
+                                                        <i class="icon-basket-loaded" onclick="addToCart({{ l.id }})">
+
+
+
+                                                        </i> Add To Cart</a></li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product_info">
+                                        <h6 class="product_title"><a href="">{{ l.nom }}</a></h6>
+                                        <div class="product_price">
+                                            <span class="price">{{l.prix }}</span>
+
+                                        </div>
+
+                                        <form action="{{ path("details") }}">
+
+                                            <input type="hidden" name="id" id="id" value={{ l.id }}>
+
+                                            <input type="hidden" name="note" id="note" value="0">
+
+
+                                            <button type="submit"> voir detail</button>
+
+
+                                        </form>
+
+                                        <script>
+
+                                            const stars = document.querySelectorAll(".la-star");
+
+                                            // On va chercher l'input
+                                            const note = document.querySelector("#note");
+                                            const idprod=document.getElementById("id");
+                                            // On boucle sur les étoiles pour le ajouter des écouteurs d'évènements
+                                            for(star of stars){
+                                                // On écoute le survol
+                                                star.addEventListener("mouseover", function(){
+                                                    resetStars();
+                                                    this.style.color = "yellow";
+                                                    this.classList.add("las");
+                                                    this.classList.remove("lar");
+                                                    // L'élément précédent dans le DOM (de même niveau, balise soeur)
+                                                    let previousStar = this.previousElementSibling;
+
+                                                    while(previousStar){
+                                                        // On passe l'étoile qui précède en rouge
+                                                        previousStar.style.color = "red";
+                                                        previousStar.classList.add("las");
+                                                        previousStar.classList.remove("lar");
+                                                        // On récupère l'étoile qui la précède
+                                                        previousStar = previousStar.previousElementSibling;
+                                                    }
+                                                });
+
+                                                // On écoute le clic
+                                                star.addEventListener("click", function(){
+                                                    note.value = this.dataset.value;
+                                                    $.ajax({
+                                                            url:"{{path('rating')}}",
+                                                            type:"POST",
+                                                            dataType:'json',
+                                                            data:{notee:this.dataset.value,idd:idprod.value},
+                                                            success: function(data) {
+                                                                alert("success");
+                                                            },
+                                                            complete: function(data){
+                                                                alert("completed");
+                                                            }
+                                                        }
+                                                    );
+
+                                                });
+
+                                            }
+
+                                            /**
+                                             * Reset des étoiles en vérifiant la note dans l'input caché
+                                             * @param {number} note
+                                             */
+                                            function resetStars(note = 0){
+                                                for(star of stars){
+                                                    if(star.dataset.value > note){
+                                                        star.style.color = "black";
+                                                        star.classList.add("lar");
+                                                        star.classList.remove("las");
+                                                    }else{
+                                                        star.style.color = "red";
+                                                        star.classList.add("las");
+                                                        star.classList.remove("lar");
+                                                    }
+                                                }
+                                            }
+                                            function makeAjax(){
+                                                // url : lien vers la méthode du controlleur ou on va executer le code serveur souhaité
+                                                // type : type de la requéte : post ,delete , get ,put
+                                                // dataType: type des données envoyé vers le serveur
+                                                // data : les données qui vont étre envoyés dans le serveur
+                                                // success : la fonction qui va étre éxecuté dans le cas d'un scénario nominale sans erreurs
+                                                // error  :  la fonction qui va étre éxecuté dans le cas d'un scénario avec erreurs
+                                                // complete :  la fonction qui va étre éxecuté dans la fin de la requéte ajax
+                                                $.ajax({
+                                                        url:"{{path('rating')}}",
+                                                        type:"POST",
+                                                        dataType:'json',
+                                                        data:{note:this.dataset.value,id:id.value},
+                                                        success: function(data) {
+                                                            alert("success");
+                                                        },
+                                                        error:null,
+                                                        complete: function(data){
+                                                            alert("completed");
+                                                        }
+                                                    }
+                                                );
+
+                                            }
+
+                                        </script>
+
+
+
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+                            {% endfor %}
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<script>
+    let product={};
+    let immmg="";
+    {% for Product in products %}
+    immmg='{{ Product.image }}';
+    console.info(immmg);
+    product = {
+        id: {{ Product.id }},
+        nom: "{{ Product.nom }}",
+        price:{{ Product.prix }},
+        stock:{{ Product.stock }},
+        image:"{{ Product.image }}",
+        desiredQuantity: 0
+    };
+    productsCollection.push(product);
+    console.log("{{ Product.image }}");
+    {% endfor %}
+    console.table(productsCollection);
+</script>

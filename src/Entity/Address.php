@@ -23,12 +23,12 @@ class Address
     private $fullName;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $campany;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=255)
      */
     private $address;
 
@@ -59,7 +59,6 @@ class Address
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="addresses")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
@@ -85,7 +84,7 @@ class Address
         return $this->campany;
     }
 
-    public function setCampany(?string $campany): self
+    public function setCampany(string $campany): self
     {
         $this->campany = $campany;
 

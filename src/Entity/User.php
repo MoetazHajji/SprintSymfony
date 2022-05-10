@@ -6,14 +6,11 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
-class User implements UserInterface
+class User
 {
     /**
      * @ORM\Id
@@ -23,9 +20,14 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $role;
 
     /**
      * @ORM\Column(type="json")
@@ -33,8 +35,7 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=255)
      */
     private $password;
 
@@ -56,16 +57,34 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isVerified = false;
+    private $isVerified;
 
     /**
      * @ORM\OneToMany(targetEntity=Address::class, mappedBy="user")
      */
     private $addresses;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Commande::class, mappedBy="idUser")
+     */
+    private $commandes;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="idUser")
+     */
+    private $commentaires;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ReservationR::class, mappedBy="iduser")
+     */
+    private $reservationRs;
+
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
+        $this->reservationRs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -85,26 +104,21 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUsername(): string
+    public function getRole(): ?string
     {
-        return (string) $this->email;
+        return $this->role;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
+    public function setRole(string $role): self
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $this->role = $role;
 
-        return array_unique($roles);
+        return $this;
+    }
+
+    public function getRoles(): ?array
+    {
+        return $this->roles;
     }
 
     public function setRoles(array $roles): self
@@ -114,10 +128,7 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -129,24 +140,9 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * Returning a salt is only needed, if you are not using a modern
-     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
-     *
-     * @see UserInterface
-     */
-    public function getSalt(): ?string
+    public function getUsername(): ?string
     {
-        return null;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials()
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        return $this->username;
     }
 
     public function setUsername(string $username): self
@@ -180,7 +176,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function isVerified(): bool
+    public function getIsVerified(): ?bool
     {
         return $this->isVerified;
     }
@@ -216,6 +212,96 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($address->getUser() === $this) {
                 $address->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->setIdUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getIdUser() === $this) {
+                $commande->setIdUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commentaire>
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setIdUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getIdUser() === $this) {
+                $commentaire->setIdUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ReservationR>
+     */
+    public function getReservationRs(): Collection
+    {
+        return $this->reservationRs;
+    }
+
+    public function addReservationR(ReservationR $reservationR): self
+    {
+        if (!$this->reservationRs->contains($reservationR)) {
+            $this->reservationRs[] = $reservationR;
+            $reservationR->setIduser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservationR(ReservationR $reservationR): self
+    {
+        if ($this->reservationRs->removeElement($reservationR)) {
+            // set the owning side to null (unless already changed)
+            if ($reservationR->getIduser() === $this) {
+                $reservationR->setIduser(null);
             }
         }
 

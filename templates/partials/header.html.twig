@@ -5,6 +5,7 @@
         <span></span>
     </div>
 </div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <header class="header_wrap fixed-top header_with_topbar">
     <div class="top-header">
@@ -36,14 +37,7 @@
                         <ul class="header_list">
                             <li><a href=""><i class="ti-control-shuffle"></i><span>Compare</span></a></li>
                             <li><a href=""><i class="ti-heart"></i><span>Wishlist</span></a></li>
-                            {% if app.user %}
-                                <li><a href="{{ path('app_logout') }}"><i class="ti-user"></i><span>Logout</span></a></li>
-                                <li><a href="{{ path('app_account') }}"><i class="ti-user"></i><span>Account</span></a></li>
-
-                                {% else %}
-                                    <li><a href="{{ path('app_login') }}"><i class="ti-user"></i><span>Login</span></a></li>
-                                    <li><a href="{{ path('app_register') }}"><i class="fas fa-sign-in-alt"></i><span>Register</span></a></li>
-                            {% endif %}
+                            <li><a href=""><i class="ti-user"></i><span>Login</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -54,8 +48,7 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg">
                 <a class="navbar-brand" href="">
-                    <img class="logo_light" src="assets/images/logo_light.png" alt="logo" />
-                    <img class="logo_dark" src="assets/images/logo_dark.png" alt="logo" />
+
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-expanded="false">
                     <span class="ion-android-menu"></span>
@@ -63,13 +56,13 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                     <ul class="navbar-nav">
                         <li class="dropdown">
-                            <a  class="nav-link" href="{{ path('app_home') }}">Home</a>
+                            <a  class="nav-link" href="#">Home</a>
                         </li>
                         <li class="dropdown">
                             <a class=" nav-link" href="#" data-toggle="dropdown">Pages</a>
                         </li>
                         <li class="">
-                            <a class=" nav-link" href="#" data-toggle="dropdown">Products</a>
+                            <a class=" nav-link" href="{{path('aff')}}" data-toggle="dropdown">Products</a>
 
                         </li>
                         <li class="dropdown">
@@ -93,24 +86,18 @@
                             </form>
                         </div><div class="search_overlay"></div>
                     </li>
-                    <li class="dropdown cart_dropdown"><a class="nav-link cart_trigger" href="#" data-toggle="dropdown"><i class="linearicons-cart"></i><span class="cart_count">2</span></a>
+                    <li class="dropdown cart_dropdown"><a class="nav-link cart_trigger" href="#" data-toggle="dropdown"><i class="linearicons-cart"></i>
+                            <span class="cart_count" id="cart-size">0</span>
+                        </a>
                         <div class="cart_box dropdown-menu dropdown-menu-right">
-                            <ul class="cart_list">
-                                <li>
-                                    <a href="#" class="item_remove"><i class="ion-close"></i></a>
-                                    <a href="#"><img src="https://placehold.it/300" alt="cart_thumb1">Variable product 001</a>
-                                    <span class="cart_quantity"> 1 x <span class="cart_amount"> <span class="price_symbole">$</span></span>78.00</span>
-                                </li>
-                                <li>
-                                    <a href="#" class="item_remove"><i class="ion-close"></i></a>
-                                    <a href="#"><img src="https://placehold.it/300" alt="cart_thumb1">Variable product 001</a>
-                                    <span class="cart_quantity"> 1 x <span class="cart_amount"> <span class="price_symbole">$</span></span>78.00</span>
-                                </li>
+                            <ul class="cart_list" id="cartBody"  >
+
+
 
                             </ul>
                             <div class="cart_footer">
-                                <p class="cart_total"><strong>Subtotal:</strong> <span class="cart_price"> <span class="price_symbole">$</span></span>159.00</p>
-                                <p class="cart_buttons"><a href="#" class="btn btn-fill-line rounded-0 view-cart">View Cart</a><a href="#" class="btn btn-fill-out rounded-0 checkout">Checkout</a></p>
+                                <p class="cart_total"><strong></strong> <span class="cart_price"> <span class="price_symbole"></span></span>/p>
+                                <p class="cart_buttons"><a  class="btn btn-fill-line rounded-0 view-cart" onclick="viewCart()">View Cart</a></p>
                             </div>
                         </div>
                     </li>
@@ -119,3 +106,113 @@
         </div>
     </div>
 </header>
+
+<script>
+    let currentId=0;
+    let cart=[];
+    let productsCollection=[];
+    let cartSize=$('#cart-size');
+
+    let cartBody=$('#cartBody');
+    function getOccu(array, id) {
+        var nbOcc = 0;
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] == id) {
+                nbOcc++;
+            }
+        }
+        return nbOcc
+    }
+
+    function updateCartRowDOM(id){
+        let size=Number.parseInt($('#quantity'+id).text());
+        size++;
+        $('#quantity'+id).text(size);
+    }
+    function addToCart(id){
+        let tmpProduct=productsCollection.find((e)=>e.id===id);
+        if (tmpProduct!==undefined){
+            let cartItem=cart.find((e)=>e.id===id);
+            if (cartItem===undefined){
+                tmpProduct.desiredQuantity++;
+                cart.push(tmpProduct);
+                addCartDOM(tmpProduct);
+
+            }
+            else {
+                cart[cart.indexOf(cartItem)].desiredQuantity++;
+                updateCartRowDOM(cartItem.id);
+            }
+            /* this is where the dom updates will take place*/
+
+
+        }else {
+            console.error('there was been an error');
+        }
+    }
+     cartBody=$('#cartBody');
+    function addCartDOM(product) {
+
+
+        console.log('invoked and the product is');
+        console.log(product);
+        let imageUrl = "{{ asset('#') }}";
+        let finalImage = imageUrl.replace("#", product.image);
+        cartBody.append("<div class=\"cartbox__item\" id=\"cartRow"+product.id+"\">\n" +
+            "<li><a href=\"#\" class=\"item_remove\" onclick=\"deleteFromCart("+product.id+")\">\n" +
+            "<i class=\"ion-close\"></i></a>\n" +
+            "<a href=\"#\">" +
+            "<img src=\""+finalImage+"\" alt=\"cart_thumb1\">"+product.nom+"</a>\n" +
+            "<span class=\"cart_quantity\"id=\"quantity"+product.id+"\">"+product.desiredQuantity+"</span></>\n" +
+            "<span class=\"cart_amount\">\n" +
+            "<span class=\"price_symbole\">$</span></span>"+product.price * product.desiredQuantity+" </span></li>" +
+            " </div>");
+
+        let size=Number.parseInt(cartSize.text());
+        size++;
+        cartSize.text(size);
+
+    }
+    function deleteFromCart(id){
+        console.log(id);
+        let product =cart.find((e)=>e.id===id);
+        console.log(product);
+        if (product!==undefined){
+            $('#cartRow'+id).remove();
+            cart.splice(cart.indexOf(product),1);
+            console.table(cart);
+            let size=Number.parseInt(cartSize.text());
+            size--;
+            cartSize.text(size);
+        }
+        else {
+            console.log('element not found ...');
+        }
+    }
+    function viewCart(){
+        sessionStorage.setItem('cart',JSON.stringify(cart));
+        window.location.href="{{ path('getCartInfo') }}";
+    }
+
+
+    function makeAjaxCall(url,type,params,successCallback,errorCallback,completeCallback){
+        // url : lien vers la méthode du controlleur ou on va executer le code serveur souhaité
+        // type : type de la requéte : post ,delete , get ,put
+        // dataType: type des données envoyé vers le serveur
+        // data : les données qui vont étre envoyés dans le serveur
+        // success : la fonction qui va étre éxecuté dans le cas d'un scénario nominale sans erreurs
+        // error  :  la fonction qui va étre éxecuté dans le cas d'un scénario avec erreurs
+        // complete :  la fonction qui va étre éxecuté dans la fin de la requéte ajax
+        $.ajax({
+                url:url,
+                type:type,
+                dataType:'json',
+                data:params,
+                success:successCallback,
+                error:errorCallback,
+                complete:completeCallback
+            }
+        );
+
+    }
+</script>

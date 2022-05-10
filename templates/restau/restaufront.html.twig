@@ -1,0 +1,92 @@
+<div class="section small_pt pb_70">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="heading_s1 text-center">
+                    <h2>NOS RESTAURANTS</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="tab-style1">
+                    <ul class="nav nav-tabs justify-content-center" role="tablist">
+
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="arrival" role="tabpanel" aria-labelledby="arrival-tab">
+                        <div class="row shop_container">
+                            {% for l in tabrestau %}
+                            <div class="col-lg-3 col-md-4 col-6">
+                                <div class="product">
+                                    <div class="product_img">
+                                        <a href="">
+                                            <img src="{{asset(l.imgR)}}" alt="product_img1">
+                                        </a>
+                                        <div class="product_action_box">
+                                            <ul class="">
+
+                                                <li><a href="{{path('reserver')}}?id={{ l.id }}"  class=""><i class=""> reserver</i></a></li>
+
+                                                     <li><a href="{{path('commenter')}}?id={{ l.id }}"  class=""><i class=""> commenter </i></a></li>
+
+
+
+
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product_info">
+                                        <h6 class="product_title"><a href="">{{ l.nomR }}</a></h6>
+                                        <h6 class="product_title"><a href="">{{ l.adressR }}</a></h6>
+                                        <h6 class="product_title"><a href="">{{ l.telR }}</a></h6>
+                                        <h6 class="product_title"><a href="">{{ l.paysR}}</a></h6>
+
+                                        </div>
+                                        <div class="rating_wrap">
+                                            <div class="rating">
+                                                <div class="product_rate" style="width:80%"></div>
+                                            </div>
+                                            <span class="rating_num">(21)</span>
+                                        </div>
+
+                                        <div class="pr_switch_wrap">
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="sellers" role="tabpanel" aria-labelledby="sellers-tab">
+                        <div class="row shop_container">
+                            <div class="col-lg-3 col-md-4 col-6">
+                                <div class="product">
+                                    <div class="product_img">
+                                        <a href="#">
+                                            <img src="http://placehold.it/300" alt="product_img9">
+                                        </a>
+                                        <div class="product_action_box">
+                                        </div>
+                                    </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

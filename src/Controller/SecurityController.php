@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Produit;
+use App\Entity\Restau;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,6 +11,15 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
+    /**
+     * @Route("/security", name="app_security")
+     */
+    public function index(): Response
+    {
+        return $this->render('security/index.html.twig', [
+            'controller_name' => 'SecurityController',
+        ]);
+    }
     /**
      * @Route("/login", name="app_login")
      */
@@ -33,6 +44,24 @@ class SecurityController extends AbstractController
     {
 
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+
+    }
+
+    /**
+     * @Route ("/aff",name="aff")
+     *
+     */
+
+    function afficher()
+    {
+
+
+        $liste = $this->getDoctrine()->getRepository(Produit::class)->findall();
+        $liste1 = $this->getDoctrine()->getRepository(Restau::class)->findall();
+        return $this->render('produit/prodfront.html.twig', ['products' => $liste,'tabrestau' => $liste1]);
+
+
+
 
     }
 }

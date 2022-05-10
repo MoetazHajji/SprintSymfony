@@ -1,0 +1,218 @@
+<div class="section pb_70">
+    <div class="container">
+        <div class="col-lg-12">
+
+            <img height="400" width="800" src=" {{asset(image)}}">
+            <h6 class="product_title"><a href="">{{nom }}</a></h6>
+            <div class="product_price">
+                <span class="price">{{prix }}</span>
+
+            <div class="stars">
+                <i class="lar la-star" data-value="1"></i><i class="lar la-star" data-value="2"></i><i class="lar la-star" data-value="3"></i><i class="lar la-star" data-value="4"></i><i class="lar la-star" data-value="5"></i>
+            </div>
+                <div class="col-md-4">
+                    <p class="text-center">
+                        <strong>Avis</strong>
+                    </p>
+
+                    <div class="progress-group">
+                        <div class="stars">
+                            <i class="lar la-star" ></i><i class="lar la-star" ></i><i class="lar la-star" ></i><i class="lar la-star" ></i><i class="lar la-star" ></i>
+                        </div>
+
+                        <span class="float-right"><b>{% for i in rate5 %} {{i.prod}}  {% endfor %} avis</b></span>
+
+                        <div class="progress progress-sm">
+                            {% for i in rate5 %}  {% for j in nbr %}
+                          <div class="progress-bar bg-warning" style="width: {{(i.prod/j.prod)*100}}%"></div>
+                            {% endfor %}
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                    <div class="progress-group">
+                        <div class="stars">
+                            <i class="lar la-star" ></i><i class="lar la-star" ></i><i class="lar la-star" ></i><i class="lar la-star" ></i></i>
+                        </div>
+                        <span class="float-right"><b>{% for i in rate4 %} {{i.prod}}  {% endfor %} avis</b></span>
+                        <div class="progress progress-sm">
+                            {% for i in rate4 %}  {% for j in nbr %}
+                                <div class="progress-bar bg-warning" style="width: {{(i.prod/j.prod)*100}}%"></div>
+                            {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- /.progress-group -->
+                    <div class="progress-group">
+                        <div class="stars">
+                            <i class="lar la-star" ></i><i class="lar la-star" ></i><i class="lar la-star" ></i>
+                        </div>
+                        <span class="float-right"><b>{% for i in rate3 %} {{i.prod}}  {% endfor %} avis</b></span>
+                        <div class="progress progress-sm">
+                            {% for i in rate3 %}  {% for j in nbr %}
+                                <div class="progress-bar bg-warning" style="width: {{(i.prod/j.prod)*100}}%"></div>
+                            {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- /.progress-group -->
+                    <div class="progress-group">
+                        <div class="stars">
+                            <i class="lar la-star" ></i><i class="lar la-star" ></i></i>
+                        </div>
+                        <span class="float-right"><b>{% for i in rate2 %} {{i.prod}}  {% endfor %} avis</b></span>
+                        <div class="progress progress-sm">
+                            {% for i in rate2 %}  {% for j in nbr %}
+                                <div class="progress-bar bg-warning" style="width: {{(i.prod/j.prod)*100}}%"></div>
+                            {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="progress-group">
+                        <div class="stars">
+                            <i class="lar la-star" ></i></i>
+                        </div>
+                        <span class="float-right"><b>{% for i in rate1 %} {{i.prod}}  {% endfor %} avis</b></span>
+                        <div class="progress progress-sm">
+                            {% for i in rate1 %}  {% for j in nbr %}
+                                <div class="progress-bar bg-warning" style="width: {{(i.prod/j.prod)*100}}%"></div>
+                            {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+    </div>
+
+
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="arrival" role="tabpanel" aria-labelledby="arrival-tab">
+            <div class="row shop_container">
+
+                    <div class="col-lg-3 col-md-4 col-6">
+
+                            <div class="product_info">
+
+
+                                </div>
+
+                                <form>
+
+                                    <input type="hidden" name="id" id="id" value={{ idproduit }}>
+
+                                    <input type="hidden" name="note" id="note" value="0">
+
+                                </form>
+                                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+                                <script>
+                                    const stars = document.querySelectorAll(".la-star");
+
+                                    // On va chercher l'input
+                                    const note = document.querySelector("#note");
+                                    const idprod=document.getElementById("id");
+                                    // On boucle sur les étoiles pour le ajouter des écouteurs d'évènements
+                                    for(star of stars){
+                                        // On écoute le survol
+                                        star.addEventListener("mouseover", function(){
+                                            resetStars();
+                                            this.style.color = "yellow";
+                                            this.classList.add("las");
+                                            this.classList.remove("lar");
+                                            // L'élément précédent dans le DOM (de même niveau, balise soeur)
+                                            let previousStar = this.previousElementSibling;
+
+                                            while(previousStar){
+                                                // On passe l'étoile qui précède en rouge
+                                                previousStar.style.color = "yellow";
+                                                previousStar.classList.add("las");
+                                                previousStar.classList.remove("lar");
+                                                // On récupère l'étoile qui la précède
+                                                previousStar = previousStar.previousElementSibling;
+                                            }
+                                        });
+
+                                        // On écoute le clic
+                                        star.addEventListener("click", function(){
+                                            note.value = this.dataset.value;
+                                            $.ajax({
+                                                    url:"{{path('rating')}}",
+                                                    type:"POST",
+                                                    dataType:'json',
+                                                    data:{notee:this.dataset.value,idd:idprod.value},
+                                                    success: function(data) {
+                                                        alert("success");
+                                                    },
+                                                    complete: function(data){
+                                                        alert("completed");
+                                                    }
+                                                }
+                                            );
+
+                                        });
+
+                                    }
+
+                                    /**
+                                     * Reset des étoiles en vérifiant la note dans l'input caché
+                                     * @param {number} note
+                                     */
+                                    function resetStars(note = 0){
+                                        for(star of stars){
+                                            if(star.dataset.value > note){
+                                                star.style.color = "black";
+                                                star.classList.add("lar");
+                                                star.classList.remove("las");
+                                            }else{
+                                                star.style.color = "yellow";
+                                                star.classList.add("las");
+                                                star.classList.remove("lar");
+                                            }
+                                        }
+                                    }
+                                    function makeAjax(){
+                                        // url : lien vers la méthode du controlleur ou on va executer le code serveur souhaité
+                                        // type : type de la requéte : post ,delete , get ,put
+                                        // dataType: type des données envoyé vers le serveur
+                                        // data : les données qui vont étre envoyés dans le serveur
+                                        // success : la fonction qui va étre éxecuté dans le cas d'un scénario nominale sans erreurs
+                                        // error  :  la fonction qui va étre éxecuté dans le cas d'un scénario avec erreurs
+                                        // complete :  la fonction qui va étre éxecuté dans la fin de la requéte ajax
+                                        $.ajax({
+                                                url:"{{path('rating')}}",
+                                                type:"POST",
+                                                dataType:'json',
+                                                data:{note:this.dataset.value,id:id.value},
+                                                success: function(data) {
+                                                    alert("success");
+                                                },
+                                                error:null,
+                                                complete: function(data){
+                                                    alert("completed");
+                                                }
+                                            }
+                                        );
+
+                                    }
+
+                                </script>
+
+
+
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>

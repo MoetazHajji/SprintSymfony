@@ -1,0 +1,32 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title of the PDF</title>
+</head>
+<img width="100" height="50" src="C:\Users\mariem\sprintsymfony\public\assets\images\logo.png">
+<h4> madame {{name}} {{ prenom }} votre facture de la commande est </h4>
+<table align="1" border="1">
+    <tr>
+
+        <th>Nom</th>
+        <th>Type</th>
+        <th>Image</th>
+        <th>Prixtotale</th>
+    </tr>
+
+    {% for l in tab %}
+
+        <tr>
+            <td>{{ l.nom }}</td>
+            <td>{{ l.type}}</td>
+            <td><img src="C:\Users\mariem\sprintsymfony\public\images\{{ l.image }}"></td>
+            <td>
+                {{nom}}dt
+            </td>
+        </tr>
+    {% endfor %}
+
+
+
+</table>
+</html>

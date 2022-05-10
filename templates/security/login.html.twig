@@ -15,10 +15,14 @@
                             <div class="heading_s1">
                                 <h3>Login</h3>
                             </div>
+                            <h4>
+
+                            </h4>
                             <form method="post">
                                 {% if app.user %}
                                     <div class="mb-3">
                                         You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+
                                     </div>
                                 {% endif %}
                                 <div class="message-flash">
@@ -34,9 +38,9 @@
                                     <label for="inputPassword">Password</label>
                                     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
                                 </div>
-                                    <input type="hidden" name="_csrf_token"
-                                           value="{{ csrf_token('authenticate') }}"
-                                    >
+                                <input type="hidden" name="_csrf_token"
+                                       value="{{ csrf_token('authenticate') }}"
+                                >
                                 <div class="login_footer form-group">
                                     <div class="chek-form">
                                         <div class="custome-checkbox">
@@ -44,7 +48,7 @@
                                             <label class="form-check-label" for="exampleCheckbox1"><span>Remember me</span></label>
                                         </div>
                                     </div>
-                                    <a href="{{ path('app_forgot_password_request') }}">Forgot password?</a>
+
                                 </div>
                                 <div class="form-group">
                                     <button  href="{{ path('app_account') }}" type="submit" class="btn btn-fill-out btn-block" name="login">Log in</button>
@@ -57,7 +61,7 @@
                                 <li><a href="#" class="btn btn-facebook"><i class="ion-social-facebook"></i>Facebook</a></li>
                                 <li><a href="#" class="btn btn-google"><i class="ion-social-googleplus"></i>Google</a></li>
                             </ul>
-                            <div class="form-note text-center">Don't Have an Account? <a href="{{ path('app_register') }}">Sign up now</a></div>
+
                         </div>
                     </div>
                 </div>
@@ -78,14 +82,14 @@
 
 
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 
 
 
 
 
 
-    {#
+        {#
         Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
         See https://symfony.com/doc/current/security/remember_me.html
 
@@ -94,8 +98,8 @@
                 <input type="checkbox" name="_remember_me"> Remember me
             </label>
         </div>
-    #}
+        #}
 
 
-</form>
+    </form>
 {% endblock %}
