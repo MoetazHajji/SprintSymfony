@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 
 /**
  * @Route("/sponsor")
@@ -36,6 +37,7 @@ class SponsorController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $sponsorRepository->add($sponsor);
+            $this->addFlash('info', 'Ajout avec succés !');
             return $this->redirectToRoute('app_sponsor_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -65,6 +67,7 @@ class SponsorController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $sponsorRepository->add($sponsor);
+            $this->addFlash('info', 'Modification avec succés !');
             return $this->redirectToRoute('app_sponsor_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -81,6 +84,7 @@ class SponsorController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$sponsor->getId(), $request->request->get('_token'))) {
             $sponsorRepository->remove($sponsor);
+            $this->addFlash('info', 'supression avec succés !');
         }
 
         return $this->redirectToRoute('app_sponsor_index', [], Response::HTTP_SEE_OTHER);

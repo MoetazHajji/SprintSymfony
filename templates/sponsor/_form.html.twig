@@ -1,5 +1,6 @@
-{{ form_start(form) }}
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
     {{ form_widget(form) }}
+
 <div class="container d-flex flex-column align-items-center">
     <button class="btn btn-fill-out btn-block">{{ button_label|default('Save') }}</button>
 </div>

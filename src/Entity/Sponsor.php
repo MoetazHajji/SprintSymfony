@@ -4,7 +4,10 @@ namespace App\Entity;
 
 use App\Repository\SponsorRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=SponsorRepository::class)
  */
@@ -18,21 +21,43 @@ class Sponsor
     private $id;
 
     /**
+     *  @Assert\Length(
+     *      min = 3,
+     *      max = 10,
+     *      minMessage = "Entrez plus que 3 lettres",
+     *      maxMessage = "Entrez moins de 10 lettres"
+     * )
+     * @Assert\NotBlank(message="Le champ nom est obligatoire * ")
      * @ORM\Column(type="string", length=255)
      */
     private $nom_sponsor;
 
     /**
+     *  @Assert\Length(
+     *      min = 3,
+     *      max = 10,
+     *      minMessage = "Entrez plus que 3 lettres",
+     *      maxMessage = "Entrez moins de 10 lettres"
+     * )
+     * @Assert\NotBlank(message="Le champ prenom est obligatoire * ")
      * @ORM\Column(type="string", length=255)
      */
     private $prenom_sponsor;
 
     /**
+     *  @Assert\Length(
+     *      min = 8,
+     *      max = 8,
+     *      minMessage = "Entrez 8 chiffres",
+     *      maxMessage = "Entrez 8 chiffres"
+     * )
+     * @Assert\NotBlank(message="Le champ num est obligatoire * ")
      * @ORM\Column(type="integer")
      */
     private $num_sponsor;
 
     /**
+     * @Assert\NotBlank(message="Le champ type est obligatoire * ")
      * @ORM\Column(type="string", length=255)
      */
     private $type_sponsor;

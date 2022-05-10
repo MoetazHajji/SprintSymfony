@@ -5,6 +5,15 @@
 {% block body %}
 <div class="container d-flex flex-column align-items-center">
     <h1>Evenement</h1>
+    {% for message in app.flashes('info')  %}
+        <div class="alert alert-success">
+            {{ message }}
+
+        </div>
+
+
+
+    {% endfor %}
 
     <table class="table">
         <thead>
@@ -41,9 +50,26 @@
                 <td colspan="9">no records found</td>
             </tr>
         {% endfor %}
+     
         </tbody>
+          <center>  <div class="text-center">
+            <div class="navigation">
+                {{ knp_pagination_render(evenements) }}
+            </div>
+        </div></center>
     </table>
+    <div class="text-center">
+            <div class="navigation">
+                {{ knp_pagination_render(evenements) }}
+            </div>
+        </div>
+
 
     <a href="{{ path('app_evenement_new') }}" class="btn btn-fill-out btn-block ">Create new</a>
+
+
+
+    <a href="#" class="btn btn-fill-out btn-block ">Show All</a>
 </div>
+
 {% endblock %}

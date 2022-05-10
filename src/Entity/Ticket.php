@@ -4,6 +4,10 @@ namespace App\Entity;
 
 use App\Repository\TicketRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=TicketRepository::class)
@@ -18,16 +22,19 @@ class Ticket
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Le champ packet est obligatoire * ")
      * @ORM\Column(type="string", length=255)
      */
     private $packet;
 
     /**
+     *  @Assert\NotBlank(message="Le champ prix est obligatoire * ")
      * @ORM\Column(type="integer")
      */
     private $prix;
 
     /**
+     * @Assert\NotBlank(message="Le champ event_id est obligatoire * ")
      * @ORM\Column(type="integer")
      */
     private $event_id;

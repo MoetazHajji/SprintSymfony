@@ -43,8 +43,7 @@ class User implements UserInterface
      *
      *
      * @ORM\Column(type="string", length=255)
-     * @Asserts\NotBlank
-     * @Asserts\length(min= 6 , max= 16)
+
      */
     private $username;
 

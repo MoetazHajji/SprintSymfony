@@ -1,0 +1,39 @@
+<table class="table">
+    <tbody>
+
+    {% for evenement in evenement %}
+
+
+        <tr>
+            <th>Nom_event</th>
+            <td>{{ evenement.nomEvent }}</td>
+        </tr>
+        <tr>
+            <th>Nbr_participant</th>
+            <td>{{ evenement.nbrParticipant }}</td>
+        </tr>
+        <tr>
+            <th>Date_debut</th>
+            <td>{{ evenement.dateDebut ? evenement.dateDebut|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Date_fin</th>
+            <td>{{ evenement.dateFin ? evenement.dateFin|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Emplacement</th>
+            <td>{{ evenement.emplacement }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ evenement.description }}</td>
+        </tr>
+        <tr>
+            <th>Theme</th>
+            <td>{{ evenement.theme }}</td>
+        </tr>
+    {% endfor %}
+
+
+    </tbody>
+</table>

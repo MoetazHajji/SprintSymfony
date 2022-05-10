@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Evenement{% endblock %}
+
+{% block body %}
+
+        {% for Event in events %}
+
+            <tbody>
+            <tr>
+                <th>Image</th>
+                <td><img src ="{{ asset('uploads/images/' ~ Event.image) }}"
+                         alt ="" style = "width: auto; height: auto">
+                </td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ Event.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom_event</th>
+                <td>{{ Event.nomEvent }}</td>
+            </tr>
+            <tr>
+                <th>Nbr_participant</th>
+                <td>{{ Event.nbrParticipant }}</td>
+            </tr>
+            <tr>
+                <th>Date_debut</th>
+                <td>{{ Event.dateDebut ? Event.dateDebut|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date_fin</th>
+                <td>{{ Event.dateFin ? Event.dateFin|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Emplacement</th>
+                <td>{{ Event.emplacement }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ Event.description }}</td>
+            </tr>
+            <tr>
+                <th>Theme</th>
+                <td>{{ Event.theme }}</td>
+            </tr>
+
+            </tbody>
+
+
+        {% endfor %}
+{% endblock %}

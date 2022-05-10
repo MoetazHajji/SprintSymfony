@@ -4,8 +4,11 @@ namespace App\Form;
 
 use App\Entity\Evenement;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 
 class EvenementType extends AbstractType
 {
@@ -18,9 +21,19 @@ class EvenementType extends AbstractType
             ->add('date_fin')
             ->add('emplacement')
             ->add('description')
-            ->add('theme')
+
+            ->add('theme', ChoiceType::class, [
+                'choices'  => [
+                    'Gastronomie' => "Gastronomie",
+                    'Cinéma' => "Cinéma",
+                    'Industriel' => "Industriel",
+                ],
+            ])
+            ->add('image', FileType::class, ['label' =>'image '])
         ;
     }
+
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {
